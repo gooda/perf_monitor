@@ -1,0 +1,808 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==================== 主题变量定义 ==================== */
+
+/* 暗色主题（默认） */
+:root,
+:root.dark {
+  /* 表面颜色 */
+  --surface-900: #0d1117;
+  --surface-800: #161b22;
+  --surface-700: #21262d;
+  --surface-600: #30363d;
+  --surface-500: #484f58;
+  --surface-400: #6e7681;
+  
+  /* 文字颜色 */
+  --text-primary: #f0f6fc;
+  --text-secondary: #8b949e;
+  --text-tertiary: #6e7681;
+  --text-muted: #484f58;
+  
+  /* 强调色 */
+  --accent-cyan: #58d1eb;
+  --accent-pink: #f778ba;
+  --accent-purple: #b392f0;
+  --accent-green: #7ee787;
+  --accent-orange: #ffa657;
+  --accent-yellow: #ffc83d;
+  --accent-red: #f85149;
+  --accent-blue: #79c0ff;
+  
+  /* 边框 */
+  --border-color: #30363d;
+  --border-hover: #484f58;
+  
+  /* 阴影 */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(88, 209, 235, 0.3);
+  
+  /* 背景网格 */
+  --grid-color: rgba(88, 209, 235, 0.03);
+  
+  /* 滚动条 */
+  --scrollbar-track: var(--surface-800);
+  --scrollbar-thumb: var(--surface-600);
+  --scrollbar-thumb-hover: var(--surface-500);
+}
+
+/* 亮色主题 */
+:root.light {
+  /* 表面颜色 - 温暖的米白色调 */
+  --surface-900: #f8fafc;
+  --surface-800: #ffffff;
+  --surface-700: #f1f5f9;
+  --surface-600: #e2e8f0;
+  --surface-500: #cbd5e1;
+  --surface-400: #94a3b8;
+  
+  /* 文字颜色 */
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --text-tertiary: #64748b;
+  --text-muted: #94a3b8;
+  
+  /* 强调色 - 亮色模式下更鲜艳 */
+  --accent-cyan: #0891b2;
+  --accent-pink: #db2777;
+  --accent-purple: #7c3aed;
+  --accent-green: #059669;
+  --accent-orange: #ea580c;
+  --accent-yellow: #ca8a04;
+  --accent-red: #dc2626;
+  --accent-blue: #2563eb;
+  
+  /* 边框 */
+  --border-color: #e2e8f0;
+  --border-hover: #cbd5e1;
+  
+  /* 阴影 - 更柔和 */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 20px rgba(8, 145, 178, 0.15);
+  
+  /* 背景网格 */
+  --grid-color: rgba(8, 145, 178, 0.04);
+  
+  /* 滚动条 */
+  --scrollbar-track: var(--surface-700);
+  --scrollbar-thumb: var(--surface-500);
+  --scrollbar-thumb-hover: var(--surface-400);
+}
+
+/* ==================== 主题过渡效果 ==================== */
+
+.theme-transitioning,
+.theme-transitioning * {
+  transition: background-color 0.3s ease,
+              border-color 0.3s ease,
+              color 0.3s ease,
+              box-shadow 0.3s ease !important;
+}
+
+/* ==================== 基础样式 ==================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  font-family: "JetBrains Mono", "SF Mono", "Menlo", monospace;
+  background: var(--surface-900);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==================== 自定义滚动条 ==================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* ==================== 动画背景网格 ==================== */
+
+.bg-grid {
+  background-image: linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* ==================== 发光效果 ==================== */
+
+.glow-cyan {
+  box-shadow: var(--shadow-glow);
+}
+
+.glow-pink {
+  box-shadow: 0 0 20px rgba(247, 120, 186, 0.3);
+}
+
+:root.light .glow-pink {
+  box-shadow: 0 0 20px rgba(219, 39, 119, 0.2);
+}
+
+.glow-green {
+  box-shadow: 0 0 20px rgba(126, 231, 135, 0.3);
+}
+
+:root.light .glow-green {
+  box-shadow: 0 0 20px rgba(5, 150, 105, 0.2);
+}
+
+/* ==================== 渐变文字 ==================== */
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 50%, var(--accent-pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ==================== 卡片悬停效果 ==================== */
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ==================== 状态指示器动画 ==================== */
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+}
+
+.status-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* ==================== 数字滚动动画 ==================== */
+
+@keyframes number-scroll {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.number-animate {
+  animation: number-scroll 0.3s ease-out;
+}
+
+/* ==================== 主题切换按钮样式 ==================== */
+
+.theme-toggle-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--surface-700);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--surface-600);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+.theme-toggle-btn svg {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.theme-toggle-btn .icon-sun {
+  position: absolute;
+}
+
+.theme-toggle-btn .icon-moon {
+  position: absolute;
+}
+
+:root.dark .theme-toggle-btn .icon-sun {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+:root.dark .theme-toggle-btn .icon-moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+:root.light .theme-toggle-btn .icon-sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+:root.light .theme-toggle-btn .icon-moon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+
+/* ==================== 主题菜单下拉样式 ==================== */
+
+.theme-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 100;
+  min-width: 140px;
+  background: var(--surface-800);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: var(--shadow-lg);
+  animation: theme-menu-in 0.2s ease;
+}
+
+@keyframes theme-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.theme-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.theme-menu-item:hover {
+  background: var(--surface-700);
+  color: var(--text-primary);
+}
+
+.theme-menu-item.active {
+  background: rgba(88, 209, 235, 0.1);
+  color: var(--accent-cyan);
+}
+
+:root.light .theme-menu-item.active {
+  background: rgba(8, 145, 178, 0.1);
+}
+
+.theme-menu-item svg {
+  flex-shrink: 0;
+}
+
+/* ==================== 火焰图样式 ==================== */
+
+.flame-graph-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+/* 工具栏 */
+.flame-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--surface-700);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  gap: 16px;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 线程筛选 */
+.thread-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-icon {
+  color: var(--text-secondary);
+}
+
+.thread-select {
+  padding: 6px 10px;
+  background: var(--surface-800);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 12px;
+  font-family: inherit;
+  min-width: 180px;
+  max-width: 280px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.thread-select:hover {
+  border-color: var(--accent-cyan);
+}
+
+.thread-select:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 2px rgba(88, 209, 235, 0.2);
+}
+
+:root.light .thread-select:focus {
+  box-shadow: 0 0 0 2px rgba(8, 145, 178, 0.2);
+}
+
+/* 聚焦指示器 */
+.focus-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  background: rgba(88, 209, 235, 0.15);
+  border: 1px solid var(--accent-cyan);
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+:root.light .focus-indicator {
+  background: rgba(8, 145, 178, 0.1);
+}
+
+.focus-label {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+.focus-name {
+  color: var(--text-primary);
+  font-family: "JetBrains Mono", monospace;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.focus-clear {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 2px;
+  transition: color 0.2s;
+}
+
+.focus-clear:hover {
+  color: var(--accent-red);
+}
+
+/* 统计信息 */
+.flame-stats {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: "JetBrains Mono", monospace;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flame-stats strong {
+  color: var(--accent-cyan);
+}
+
+/* 缩放控制 */
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--surface-800);
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.zoom-controls button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.zoom-controls button:hover:not(:disabled) {
+  background: var(--surface-700);
+  color: var(--text-primary);
+}
+
+.zoom-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.zoom-level {
+  font-size: 10px;
+  color: var(--text-secondary);
+  min-width: 40px;
+  text-align: center;
+}
+
+/* 火焰图容器 */
+.flame-graph-container {
+  position: relative;
+  background: var(--surface-800);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: auto;
+  transition: height 0.3s ease;
+}
+
+.flame-graph-container.expanded {
+  box-shadow: var(--shadow-glow);
+}
+
+.flame-graph-scroll {
+  min-height: 100%;
+}
+
+/* 火焰图可视化 */
+.flame-graph-viz {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.icicle-view {
+  padding: 8px;
+}
+
+/* 根节点层 */
+.flame-root-layer {
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+.flame-root-bar {
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  cursor: default;
+  transition: opacity 0.2s;
+}
+
+.flame-root-bar:hover {
+  opacity: 0.9;
+}
+
+.flame-root-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flame-root-value {
+  font-weight: 400;
+  opacity: 0.8;
+  font-size: 11px;
+}
+
+/* 子节点容器 */
+.flame-node-children {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.root-children {
+  margin-top: 2px;
+}
+
+/* 火焰节点 */
+.flame-node-container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.flame-node-bar {
+  height: 22px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  margin: 1px;
+}
+
+.flame-node-bar:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.flame-node-text {
+  font-size: 10px;
+  color: #fff;
+  padding: 0 4px;
+  pointer-events: none;
+  line-height: 20px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tooltip */
+.flame-tooltip {
+  position: absolute;
+  z-index: 100;
+  background: var(--surface-900);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 14px;
+  pointer-events: none;
+  max-width: 400px;
+  box-shadow: var(--shadow-lg);
+}
+
+.tooltip-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+.tooltip-stats {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+}
+
+.tooltip-value {
+  color: var(--accent-cyan);
+  font-family: "JetBrains Mono", monospace;
+}
+
+.tooltip-percent {
+  color: var(--accent-orange);
+  font-weight: 600;
+}
+
+.tooltip-address {
+  margin-top: 6px;
+  font-size: 10px;
+  color: var(--text-secondary);
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* 无数据状态 */
+.flame-no-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+/* 空状态 */
+.flame-graph-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  background: var(--surface-800);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.empty-text {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.empty-hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* 线程概览 */
+.thread-overview {
+  background: var(--surface-700);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.overview-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.thread-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+.thread-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  background: var(--surface-800);
+}
+
+.thread-bar-item:hover {
+  background: rgba(88, 209, 235, 0.1);
+}
+
+:root.light .thread-bar-item:hover {
+  background: rgba(8, 145, 178, 0.08);
+}
+
+.thread-bar-item.active {
+  background: rgba(88, 209, 235, 0.15);
+  border: 1px solid var(--accent-cyan);
+}
+
+:root.light .thread-bar-item.active {
+  background: rgba(8, 145, 178, 0.12);
+}
+
+.thread-name {
+  width: 140px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-primary);
+  font-family: "JetBrains Mono", monospace;
+}
+
+.thread-bar {
+  flex: 1;
+  background: var(--surface-700);
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.thread-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.thread-pct {
+  width: 45px;
+  text-align: right;
+  color: var(--text-secondary);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+}

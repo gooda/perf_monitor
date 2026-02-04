@@ -1,0 +1,101 @@
+{
+  "enabled": true,
+  "focused_processes": [
+    {
+      "name": "NetEase Music",
+      "patterns": [
+        "neteasemusic",
+        "*netease*music*"
+      ],
+      "enabled": true,
+      "detailed_memory": true,
+      "memory_metrics": [
+        "physFootprint",
+        "memResidentSize",
+        "memVirtualSize",
+        "memRPrvt",
+        "memRShrd",
+        "memPurgeableSize",
+        "memCompressed",
+        "memSwapUsage",
+        "memRegions",
+        "memAnonymous",
+        "memFileBacked",
+        "memHeapSize",
+        "memStackSize"
+      ],
+      "network_monitoring": true,
+      "network_rate_threshold_bps": 1024,
+      "disk_monitoring": true,
+      "disk_rate_threshold_bps": 1024,
+      "sample_interval_s": 1.0,
+      "history_size": 100
+    },
+    {
+      "name": "Community App",
+      "patterns": [
+        "community",
+        "*community*"
+      ],
+      "enabled": true,
+      "detailed_memory": true,
+      "memory_metrics": [
+        "physFootprint",
+        "memResidentSize",
+        "memVirtualSize",
+        "memRPrvt",
+        "memRShrd",
+        "memPurgeableSize",
+        "memCompressed",
+        "memSwapUsage",
+        "memRegions",
+        "memAnonymous",
+        "memFileBacked",
+        "memHeapSize",
+        "memStackSize"
+      ],
+      "network_monitoring": true,
+      "network_rate_threshold_bps": 1024,
+      "disk_monitoring": true,
+      "disk_rate_threshold_bps": 1024,
+      "sample_interval_s": 1.0,
+      "history_size": 100
+    },
+    {
+      "name": "News Board",
+      "patterns": [
+        "NewsBoard",
+        "*news*board*",
+        "*newsboard*"
+      ],
+      "enabled": true,
+      "detailed_memory": true,
+      "memory_metrics": [
+        "physFootprint",
+        "memResidentSize",
+        "memVirtualSize",
+        "memRPrvt",
+        "memRShrd",
+        "memPurgeableSize",
+        "memCompressed",
+        "memSwapUsage",
+        "memRegions",
+        "memAnonymous",
+        "memFileBacked",
+        "memHeapSize",
+        "memStackSize"
+      ],
+      "network_monitoring": true,
+      "network_rate_threshold_bps": 1024,
+      "disk_monitoring": true,
+      "disk_rate_threshold_bps": 1024,
+      "sample_interval_s": 1.0,
+      "history_size": 100
+    }
+  ],
+  "general_process_limit": 50,
+  "cpu_threshold_percent": 1.0,
+  "memory_threshold_mb": 10.0,
+  "save_detailed_data": false,
+  "data_retention_hours": 24
+}
