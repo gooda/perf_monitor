@@ -2,7 +2,9 @@
 
 一个现代化的 iOS 设备性能监控前端应用，消费 `ios_perf` WebSocket 服务提供的实时性能数据。
 
-![Preview](preview.png)
+![Preview](public/00.png)
+
+![Preview](public/01.jpg)
 
 ## 功能特性
 
