@@ -4,7 +4,7 @@
 
 ![Preview](public/00.png)
 
-![Preview](public/01.jpg)
+![Preview](public/000.png)
 
 ## 功能特性
 
@@ -43,7 +43,6 @@
 ### 前置条件
 
 1. 解压 `ios_perf.zip`，其中包含两个独立可执行程序：
-
    - **`ios-perf-monitor`** — 负责 iOS 设备连接与隧道管理
    - **`ios-perf-service`** — 负责性能数据采集并通过 WebSocket 推送
 
