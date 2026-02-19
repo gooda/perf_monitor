@@ -40,14 +40,28 @@
 
 ### 前置条件
 
-1. 确保 `ios_perf` WebSocket 服务已启动：
+1. 解压 `ios_perf.zip`，其中包含两个独立可执行程序：
+
+   - **`ios-perf-monitor`** — 负责 iOS 设备连接与隧道管理
+   - **`ios-perf-service`** — 负责性能数据采集并通过 WebSocket 推送
+
+2. 分别在两个终端中启动：
 
 ```bash
-# 在 ios_perf 项目目录
-python scripts/websocket_service_enhanced.py
+# 终端 1：启动设备连接监控服务
+./ios-perf-monitor
 ```
 
-服务默认监听 `ws://localhost:8766`
+```bash
+# 终端 2：启动性能采集服务
+./ios-perf-service
+```
+
+3. 确认设备已就绪：
+
+   `ios-perf-monitor` 启动后会在 `config/` 目录下生成 `device_tunnels` 文件，该文件记录已连接设备的信息及激活状态。当文件中目标设备的状态为**激活（active）**时，Web 端即可通过"开始监控"触发性能采集，实时消费 `ios-perf-service` 推送的性能数据。
+
+`ios-perf-service` 默认监听 `ws://localhost:8766`
 
 ### 安装依赖
 
@@ -93,7 +107,7 @@ npm run preview
 
 确保：
 
-1. 远端服务使用 `--host 0.0.0.0` 参数启动以监听所有网络接口
+1. 远端机器上已启动 `ios-perf-monitor` 和 `ios-perf-service`，且 `ios-perf-service` 监听所有网络接口（`0.0.0.0:8766`）
 2. 防火墙允许 8766 端口访问
 3. 客户端和服务端在同一网络或有网络可达性
 
