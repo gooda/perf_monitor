@@ -73,10 +73,10 @@ interface PerfState {
   jank: TimeSeriesPoint[];
 
   // 网络时序数据
-  networkRxRate: TimeSeriesPoint[]; // 接收速率 (bytes/s)
-  networkTxRate: TimeSeriesPoint[]; // 发送速率 (bytes/s)
-  networkRxTotal: TimeSeriesPoint[]; // 累计接收 (bytes)
-  networkTxTotal: TimeSeriesPoint[]; // 累计发送 (bytes)
+  networkRxRate: TimeSeriesPoint[]; // 接收速率 (KB/s)
+  networkTxRate: TimeSeriesPoint[]; // 发送速率 (KB/s)
+  networkRxTotal: TimeSeriesPoint[]; // 累计接收 (MB)
+  networkTxTotal: TimeSeriesPoint[]; // 累计发送 (MB)
 
   // 进程数据
   processes: Map<number, ProcessData>;
@@ -221,6 +221,29 @@ function addDataPoint(
     return newArr.slice(-MAX_DATA_POINTS);
   }
   return newArr;
+}
+
+function toRateBps(
+  rateBps: number | null | undefined,
+  deltaBytes: number | null | undefined,
+  sampleIntervalS: number | null | undefined
+): number {
+  if (typeof rateBps === "number" && Number.isFinite(rateBps)) {
+    return rateBps;
+  }
+  if (
+    typeof deltaBytes === "number" &&
+    Number.isFinite(deltaBytes) &&
+    typeof sampleIntervalS === "number" &&
+    Number.isFinite(sampleIntervalS) &&
+    sampleIntervalS > 0
+  ) {
+    return deltaBytes / sampleIntervalS;
+  }
+  if (typeof deltaBytes === "number" && Number.isFinite(deltaBytes)) {
+    return deltaBytes;
+  }
+  return 0;
 }
 
 export const usePerfStore = create<PerfState>((set, get) => ({
@@ -507,16 +530,24 @@ export const usePerfStore = create<PerfState>((set, get) => ({
 
     if (network) {
       // 更新系统级网络数据
-      const rxRate = network.delta_rx_bytes ?? 0;
-      const txRate = network.delta_tx_bytes ?? 0;
+      const rxRateBps = toRateBps(
+        network.rx_rate_bps,
+        network.delta_rx_bytes,
+        network.sample_interval_s
+      );
+      const txRateBps = toRateBps(
+        network.tx_rate_bps,
+        network.delta_tx_bytes,
+        network.sample_interval_s
+      );
 
       newState.networkRxRate = addDataPoint(state.networkRxRate, {
         timestamp,
-        value: rxRate / 1024, // 转换为 KB/s
+        value: rxRateBps / 1024, // 转换为 KB/s
       });
       newState.networkTxRate = addDataPoint(state.networkTxRate, {
         timestamp,
-        value: txRate / 1024, // 转换为 KB/s
+        value: txRateBps / 1024, // 转换为 KB/s
       });
       newState.networkRxTotal = addDataPoint(state.networkRxTotal, {
         timestamp,
@@ -539,8 +570,16 @@ export const usePerfStore = create<PerfState>((set, get) => ({
           ...existingProcess,
           networkRxBytes: targetProcessNetwork.rx_bytes ?? 0,
           networkTxBytes: targetProcessNetwork.tx_bytes ?? 0,
-          networkRxRate: targetProcessNetwork.delta_rx_bytes ?? 0,
-          networkTxRate: targetProcessNetwork.delta_tx_bytes ?? 0,
+          networkRxRate: toRateBps(
+            targetProcessNetwork.rx_rate_bps,
+            targetProcessNetwork.delta_rx_bytes,
+            targetProcessNetwork.sample_interval_s
+          ),
+          networkTxRate: toRateBps(
+            targetProcessNetwork.tx_rate_bps,
+            targetProcessNetwork.delta_tx_bytes,
+            targetProcessNetwork.sample_interval_s
+          ),
         });
         newState.processes = newProcesses;
       }
@@ -553,11 +592,21 @@ export const usePerfStore = create<PerfState>((set, get) => ({
           ...history,
           networkRx: addDataPoint(history.networkRx ?? [], {
             timestamp,
-            value: (targetProcessNetwork.delta_rx_bytes ?? 0) / 1024, // KB/s
+            value:
+              toRateBps(
+                targetProcessNetwork.rx_rate_bps,
+                targetProcessNetwork.delta_rx_bytes,
+                targetProcessNetwork.sample_interval_s
+              ) / 1024, // KB/s
           }),
           networkTx: addDataPoint(history.networkTx ?? [], {
             timestamp,
-            value: (targetProcessNetwork.delta_tx_bytes ?? 0) / 1024, // KB/s
+            value:
+              toRateBps(
+                targetProcessNetwork.tx_rate_bps,
+                targetProcessNetwork.delta_tx_bytes,
+                targetProcessNetwork.sample_interval_s
+              ) / 1024, // KB/s
           }),
         });
         newState.processHistory = newHistory;

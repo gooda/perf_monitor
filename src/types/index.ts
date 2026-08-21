@@ -188,6 +188,9 @@ export interface NetworkStats {
   delta_tx_bytes: number;
   delta_rx_packets: number;
   delta_tx_packets: number;
+  sample_interval_s?: number | null;
+  rx_rate_bps?: number | null;
+  tx_rate_bps?: number | null;
 }
 
 export interface ProcessNetworkStats {
@@ -201,6 +204,9 @@ export interface ProcessNetworkStats {
   delta_tx_bytes: number;
   delta_rx_packets: number;
   delta_tx_packets: number;
+  sample_interval_s?: number | null;
+  rx_rate_bps?: number | null;
+  tx_rate_bps?: number | null;
 }
 
 export interface NetworkData {
